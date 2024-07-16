@@ -1,0 +1,12 @@
+.table-align-left {
+  text-align: left;
+}
+
+.table td {
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.table th {
+  white-space: nowrap;
+}
