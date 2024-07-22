@@ -15,11 +15,11 @@ export default function AssignmentControls() {
           placeholder="Search..." />
       </div>
 
-      <button id="wd-add-assignment-group" className="btn btn-lg btn-secondary me-1 float-end">
+      <button id="wd-add-assignment-group" className="btn btn-secondary me-1 float-end">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Group
       </button>
-      <button id="wd-add-assignment" className="btn btn-lg btn-danger me-1 float-end">
+      <button id="wd-add-assignment" className="btn btn-danger me-1 float-end">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Assignment
       </button>

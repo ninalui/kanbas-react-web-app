@@ -1,16 +1,15 @@
 import "./styles.css";
+import * as db from "../../Database/index";
+import { useParams } from "react-router";
 
 
 export default function Grades() {
 
-  const data = [
-    { name: "Jane Adams", a1: "100%", a2: "96.67%", a3: "92.18%", a4: "66.22%" },
-    { name: "Christina Allen", a1: "100%", a2: "100%", a3: "100%", a4: "100%" },
-    { name: "Samreen Ansari", a1: "100%", a2: "100%", a3: "100%", a4: "100%" },
-    { name: "Han Bao", a1: "100%", a2: "100%", a3: "88.03%", a4: "98.99%" },
-    { name: "Mahi Sai Srinivas Bobbili", a1: "100%", a2: "96.67%", a3: "100%", a4: "100%" },
-    { name: "Siran Cao", a1: "100%", a2: "100%", a3: "100%", a4: "100%" },
-  ]
+  const { cid } = useParams();
+  const enrollments = db.enrollments;
+  const users = db.users;
+  const grades = db.grades;
+  const assignments = db.assignments;
 
   return (
     <div className="table-responsive pt-3">
@@ -18,23 +17,42 @@ export default function Grades() {
         <thead className="table-secondary">
           <tr>
             <th className="table-align-left">Student Name</th>
-            <td>A1 SETUP <br /> Out of 100</td>
-            <td>A2 HTML <br /> Out of 100</td>
-            <td>A3 CSS <br /> Out of 100</td>
-            <td>A4 BOOTSTRAP <br /> Out of 100</td>
+            {assignments
+              .filter((assignment: any) => assignment.course === cid)
+              .map((assignment: any) => (
+                <td key={assignment.title}>{assignment.title} <br /> Out of {assignment.points} </td>
+              ))}
           </tr>
         </thead>
         <tbody>
+          {enrollments
+            .filter((enrollment: any) => enrollment.course === cid)
+            .map((enrollment: any) => (
+              <tr key={enrollment._id}>
+                {users 
+                  .filter((user: any) => user._id === enrollment.user)
+                  .map((user: any) => ( 
+                    <td key={user._id} className="table-align-left text-danger">{user.firstName} {user.lastName}</td> 
+                  ))}
+                  
+            {assignments
+            .filter((assignment: any) => assignment.course === cid)
+            .map((assignment: any) => (
+              <td key={assignment._id}>  
+                      {grades
+                        .filter((grade: any) => grade.assignment === assignment._id)
+                        .filter((grade: any) => grade.student === enrollment.user)
+                        .map((grade: any) => (
+                          <div key={grade._id}>
+                            <span>{grade.grade}</span>
+                          </div>
+                        ))}
+                    </td>
+                  ))}
+              </tr>
+            ))}
+
           <tr></tr>
-          {data.map((student, index) => (
-            <tr key={index}>
-              <td className="table-align-left text-danger col-4">{student.name}</td>
-              <td className="col-2">{student.a1}</td>
-              <td className="col-2">{student.a2}</td>
-              <td className="col-2"><input type="text" className="form-control border-0 bg-transparent text-center" defaultValue={student.a3} /></td>
-              <td className="col-2">{student.a4}</td>
-            </tr>
-          ))}
         </tbody>
       </table>
     </div>

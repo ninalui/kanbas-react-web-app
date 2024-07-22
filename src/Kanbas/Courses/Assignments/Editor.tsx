@@ -1,35 +1,35 @@
 import { RxCross2 } from "react-icons/rx";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { useParams } from "react-router";
+import * as db from "../../Database";
+import { Link } from "react-router-dom";
 
 export default function AssignmentEditor() {
+  const { cid } = useParams();
+  const { aid } = useParams();
+  const assignments = db.assignments
+
   return (
     <div id="wd-assignments-editor">
-      <form>
-        <div className="form-group pb-3">
-          <label htmlFor="wd-name" className="pb-1">Assignment Name</label>
-          <input id="wd-name" className="form-control" type="text" value="A1" />
-        </div>
-        <div className="form-group pb-3">
-          <div id="wd-description" className="form-control" contentEditable={true} role="textbox" aria-multiline={true}>
-            <p>The assignment is <span className="text-danger">available online</span> </p>
-            <p>Submit a link to the landing page of your Web application running on Netlify. </p>
-
-            <p>The landing page should include the following:</p>
-            <ul>
-              <li>Your full name and section </li>
-              <li> Links to each of the lab assignments </li>
-              <li> Link to the Kanbas application </li>
-              <li> Links to all relevant source code repositories </li>
-            </ul>
-
-            The Kanbas application should include a link to navigate back to the landing page
-          </div>
-        </div>
-
+      
+        {assignments
+        .filter((assignment: any) => assignment._id === aid)
+        .map((assignment: any) => (
+          <form>
+          
+          <div className="form-group pb-3">
+            <label htmlFor="wd-name" className="pb-1">Assignment Name</label>
+            <input id="wd-name" className="form-control" type="text" value={assignment.title} />
+          </div><div className="form-group pb-3">
+              <div id="wd-description" className="form-control" contentEditable={true} role="textbox" aria-multiline={true}>
+                {assignment.description}
+              </div>
+            </div>
+        
         <div className="form-group row pb-3">
           <label htmlFor="wd-points" className="col-sm-3 col-form-label text-end">Points</label>
           <div className="col-sm-9">
-            <input id="wd-points" className="form-control" type="text" placeholder="100" />
+            <input id="wd-points" className="form-control" type="text" placeholder={assignment.points} />
           </div>
         </div>
 
@@ -100,11 +100,6 @@ export default function AssignmentEditor() {
               <div className="pb-3">
                 <label htmlFor="wd-assign-to" className="form-check-label"><b>Assign to</b></label>
                 <div className="input-group">
-
-                  <div className="input-group-prepend p-1 border border-end-0">
-                    <button className="btn btn-secondary">Everyone <RxCross2 /></button>
-                  </div>
-
                   <input id="wd-assign-to" className="form-control border-start-0" type="text" placeholder="" />
                 </div>
               </div>
@@ -112,7 +107,7 @@ export default function AssignmentEditor() {
               <div className="pb-3">
                 <label htmlFor="wd-due-date" className="form-check-label"><b>Due</b></label>
                 <div className="input-group">
-                  <input id="wd-due-date" className="form-control" type="text" defaultValue="May 13, 2024, 11:59 PM" />
+                  <input id="wd-due-date" className="form-control" type="text" defaultValue={`${assignment.dueDate}, ${assignment.dueTime}`} />
                   <span className="input-group-text"><FaRegCalendarAlt /></span>
                 </div>
               </div>
@@ -121,7 +116,7 @@ export default function AssignmentEditor() {
                 <div className="col pb-3">
                   <label htmlFor="wd-available-from" className="form-check-label"><b>Available from</b></label>
                   <div className="input-group">
-                    <input id="wd-available-from" className="form-control" type="text" defaultValue="May 6, 2024, 12:00 AM" />
+                    <input id="wd-available-from" className="form-control" type="text" defaultValue={`${assignment.availableFromDate}, ${assignment.availableFromTime}`} />
                     <span className="input-group-text"><FaRegCalendarAlt /></span>
                   </div>
                 </div>
@@ -129,7 +124,7 @@ export default function AssignmentEditor() {
                 <div className="col pb-3">
                   <label htmlFor="wd-available-until" className="form-check-label"><b>Until</b></label>
                   <div className="input-group">
-                    <input id="wd-available-until" className="form-control" type="text" defaultValue="May 13, 2024, 11:59 PM" />
+                    <input id="wd-available-until" className="form-control" type="text" />
                     <span className="input-group-text"><FaRegCalendarAlt /></span>
                   </div>
                 </div>
@@ -137,20 +132,14 @@ export default function AssignmentEditor() {
             </div>
 
           </div>
-        </div>
+        </div> 
+         </form> ))} 
+     
+      <div className="float-end">
+        <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary me-1">Cancel</Link>
+        <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger me-1">Save</Link>
+      </div>
 
-
-
-        <div className="float-end">
-          <button id="wd-add-assignment" className="btn btn-lg btn-secondary me-1">
-            Cancel
-          </button>
-          <button id="wd-save" className="btn btn-lg btn-danger me-1">
-            Save
-          </button>
-        </div>
-
-      </form>
     </div >
   );
 }

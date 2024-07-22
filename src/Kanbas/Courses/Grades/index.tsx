@@ -6,8 +6,12 @@ import { FaGear } from "react-icons/fa6";
 import { LuFilter } from "react-icons/lu";
 import { SlArrowDown } from "react-icons/sl";
 import GradesTable from "./GradesTable";
+import { assignments, enrollments } from "../../Database";
+import { useParams } from "react-router";
+
 
 export default function Grades() {
+  const { cid } = useParams();
   return (
     <div>
 
@@ -17,7 +21,7 @@ export default function Grades() {
             <LiaFileImportSolid className="fs-4" /> Import
           </button></div>
         <div className="dropdown p-1">
-          <button className="btn btn-secondary" type="button">
+          <button className="btn  btn-secondary" type="button">
             <LiaFileExportSolid className="fs-4"/> Export <SlArrowDown className="fs-6 ms-1"/>
           </button>
         </div>
@@ -37,9 +41,10 @@ export default function Grades() {
             </span>
             <select className="form-select border-start-0">
               <option selected>Search Students</option>
-              <option value="Student 1">Student 1</option>
-              <option value="Student 2">Student 2</option>
-              <option value="Student 3">Student 3</option>
+              {enrollments
+                .filter((enrollment: any) => enrollment.course === cid)
+                .map((enrollment: any) => (
+                  <option value={enrollment.user}>{enrollment.user}</option> )) } 
             </select>
           </div>
         </div>
@@ -52,9 +57,8 @@ export default function Grades() {
             </span>
             <select className="form-select border-start-0">
               <option selected>Search Assignments</option>
-              <option value="A1">A1</option>
-              <option value="A2">A2</option>
-              <option value="A3">A3</option>
+              {assignments.filter((assignment: any) => assignment.course === cid) 
+                .map((assignment: any) => ( <option value={assignment._id}>{assignment.title}</option> )) }
             </select>
           </div>
         </div>
