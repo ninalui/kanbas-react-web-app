@@ -5,18 +5,29 @@ import AssignmentControls from "./AssignmentControls";
 import AssignmentHeading from "./AssignmentHeading";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useNavigate, useParams } from "react-router";
-import * as db from "../../Database";
 import { Link } from "react-router-dom";
-import { addAssignment, updateAssignment, deleteAssignment }
+import { deleteAssignment }
   from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
-import React, { useState } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  // format from YYYMMMDDTHH:MM:SSZ to "Month Day, Year Hour:Minute"
+  const formatDateTime = (date: string) => {
+    const d = new Date(date);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    };
+    return d.toLocaleDateString(undefined, options);
+  };
 
   return (
     <div id="wd-assignments pt-4">
@@ -46,8 +57,8 @@ export default function Assignments() {
                 </div>
                 <div>
                   <span className="text-danger">Multiple Modules</span> |
-                  <b> Not available until</b> {assignment.availableFrom} |
-                  <b> Due</b> {assignment.dueDate} | {assignment.points} pts
+                  <b> Not available until</b> {formatDateTime(assignment.availableFrom)} |
+                  <b> Due</b> {formatDateTime(assignment.dueDate)} | {assignment.points} pts
                 </div>
               </div>
 
