@@ -1,7 +1,11 @@
 import { FaPlus } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
+import { addAssignment } from "./reducer";
 
-export default function AssignmentControls() {
+export default function AssignmentControls(
+  { addAssignment }:
+    { addAssignment: () => void }
+) {
   return (
     <div className="text-nowrap d-flex justify-content-start align-items-center pb-1 mb-3">
       <div className="input-group me-5">
@@ -19,7 +23,8 @@ export default function AssignmentControls() {
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Group
       </button>
-      <button id="wd-add-assignment" className="btn btn-danger me-1 float-end">
+      
+      <button id="wd-add-assignment" className="btn btn-danger me-1 float-end" onClick={(addAssignment)}>
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Assignment
       </button>

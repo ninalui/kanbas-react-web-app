@@ -1,56 +1,56 @@
 import { RxCross2 } from "react-icons/rx";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router";
-import { Link } from "react-router-dom";
-import { updateAssignment } from "./reducer";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { addAssignment } from "./reducer";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function AssignmentEditor() {
+export default function New() {
   const { cid } = useParams();
-  const { aid } = useParams();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const currentAssignment = assignments.find((assignment: any) => assignment._id === aid);
-
   const [assignment, setAssignment] = useState({
-    ...currentAssignment
+    _id: "",
+    title: "",
+    course: cid,
+    points: "",
+    dueDate: "",
+    availableUntil: "",
+    availableFrom: "",
+    description: ""
   });
-
-  const handleSave = (e: any) => {
-    dispatch(updateAssignment(assignment));
-    navigate(`/Kanbas/Courses/${cid}/Assignments`);
-  };
-
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    setAssignment((prev: any) => ({ ...prev, [name]: value }));
+    setAssignment((prev) => ({ ...prev, [name]: value }));
+  }
+
+  const handleCreate = () => {
+    dispatch(addAssignment(assignment));
+    navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
 
   return (
     <div id="wd-assignments-editor">
-      
-        {assignments
-        .filter((assignment: any) => assignment._id === aid)
-        .map((assignment: any) => (
-          <form>
-          
-          <div className="form-group pb-3">
-            <label htmlFor="wd-name" className="pb-1">Assignment Name</label>
-            <input id="wd-name" className="form-control" name="title" type="text" defaultValue={assignment.title} onChange={handleChange} />
-          </div>
-          <div className="form-group pb-3">
-            <textarea id="wd-description" className="form-control" name="description" defaultValue={assignment.description} onChange={handleChange}/>
-          </div>
-        
+      <form>
+        <div className="form-group pb-3">
+          <label htmlFor="wd-name" className="pb-1">Assignment Name</label>
+          <input id="wd-name" className="form-control"  name="title" type="text" placeholder="Title"
+            onChange={handleChange} />
+        </div>
+        <div className="form-group pb-3">
+          <textarea id="wd-description" className="form-control" name="description" placeholder="Description"
+            onChange={handleChange} />
+        </div>
+
         <div className="form-group row pb-3">
           <label htmlFor="wd-points" className="col-sm-3 col-form-label text-end">Points</label>
           <div className="col-sm-9">
-            <input id="wd-points" className="form-control" name="points" type="text" defaultValue={assignment.points} onChange={handleChange} />
+            <input id="wd-points" className="form-control" name="points" type="text" placeholder="#"
+              onChange={handleChange} />
           </div>
         </div>
 
@@ -128,7 +128,8 @@ export default function AssignmentEditor() {
               <div className="pb-3">
                 <label htmlFor="wd-due-date" className="form-check-label"><b>Due</b></label>
                 <div className="input-group">
-                  <input id="wd-due-date" className="form-control" name="dueDate" type="text" defaultValue={assignment.dueDate} onChange={handleChange}/>
+                  <input id="wd-due-date" className="form-control" name="dueDate" type="text" placeholder="Due Date"
+                    onChange={handleChange} />
                   <span className="input-group-text"><FaRegCalendarAlt /></span>
                 </div>
               </div>
@@ -137,7 +138,8 @@ export default function AssignmentEditor() {
                 <div className="col pb-3">
                   <label htmlFor="wd-available-from" className="form-check-label"><b>Available from</b></label>
                   <div className="input-group">
-                    <input id="wd-available-from" className="form-control" name="availableFrom" type="text" defaultValue={assignment.availableFrom} onChange={handleChange}/>
+                    <input id="wd-available-from" className="form-control" name="availableFrom" type="text" placeholder="Available From"
+                      onChange={handleChange} />
                     <span className="input-group-text"><FaRegCalendarAlt /></span>
                   </div>
                 </div>
@@ -145,20 +147,23 @@ export default function AssignmentEditor() {
                 <div className="col pb-3">
                   <label htmlFor="wd-available-until" className="form-check-label"><b>Until</b></label>
                   <div className="input-group">
-                    <input id="wd-available-until" className="form-control" name="availableUntil" type="text" defaultValue={assignment.availableUntil} onChange={handleChange}/>
+                    <input id="wd-available-until" className="form-control" name="availableUntil" type="text" placeholder="Available Until"
+                      onChange={handleChange} />
                     <span className="input-group-text"><FaRegCalendarAlt /></span>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
-        </div> 
-         </form> ))} 
-     
+        </div>
+      </form>
+
       <div className="float-end">
         <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary me-1">Cancel</Link>
-        <button className="btn btn-danger me-1" onClick={handleSave}>Save</button>
+        <button className="btn btn-danger me-1"
+          onClick={() => {handleCreate()}}>
+          Save
+        </button>
       </div>
 
     </div >
