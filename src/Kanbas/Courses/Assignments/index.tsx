@@ -6,16 +6,31 @@ import AssignmentHeading from "./AssignmentHeading";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { deleteAssignment }
+import { deleteAssignment, setAssignments }
   from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import * as client from "./client";
 
 export default function Assignments() {
   const { cid } = useParams();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
+  const fetchAssignments = async () => {
+    const modules = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(modules));
+  };
+  const removeAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
+
   // format from YYYMMMDDTHH:MM:SSZ to "Month Day, Year Hour:Minute"
   const formatDateTime = (date: string) => {
     const d = new Date(date);
@@ -34,7 +49,7 @@ export default function Assignments() {
 
       <AssignmentControls addAssignment={() => {
         navigate(`/Kanbas/Courses/${cid}/Assignments/New`);
-      }}/>
+      }} />
 
       <AssignmentHeading />
 
@@ -46,7 +61,7 @@ export default function Assignments() {
               <div className="d-flex align-items-center justify-content-start me-3">
                 <BsGripVertical className="me-3 fs-3" />
                 <Link to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`} className="wd-assignment-link">
-                <FaRegPenToSquare className="text-success me-3 fs-3" /> </Link>
+                  <FaRegPenToSquare className="text-success me-3 fs-3" /> </Link>
               </div>
 
               <div className="flex-grow-1 me-3">
@@ -65,14 +80,11 @@ export default function Assignments() {
               <div className="col-2 d-flex justify-content-end">
                 <AssignmentControlButtons
                   assignmentId={assignment._id}
-                  deleteAssignment={(assignmentId) => {
-                    dispatch(deleteAssignment(assignmentId));
-                  }} />
+                  deleteAssignment={(assignmentId) => { removeAssignment(assignmentId); }} />
               </div>
             </li>
           ))}
       </ul>
-
     </div>
   );
 }

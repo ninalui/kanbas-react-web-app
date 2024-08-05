@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { addAssignment } from "./reducer";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as client from "./client";
 
 export default function New() {
   const { cid } = useParams();
@@ -11,6 +12,11 @@ export default function New() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const createAssignment = async (assignment: any) => {
+    const newAssignment = await client.createAssignment(cid as string, assignment);
+    dispatch(addAssignment(newAssignment));
+  };
 
   const [assignment, setAssignment] = useState({
     _id: "",
@@ -29,7 +35,7 @@ export default function New() {
   }
 
   const handleCreate = () => {
-    dispatch(addAssignment(assignment));
+    createAssignment(assignment);
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
 
