@@ -7,6 +7,7 @@ import New from "./Assignments/New";
 import Grades from "./Grades";
 import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
+import PeopleTable from "./People/table";
 
 
 export default function Courses({ courses }: { courses: any[]; }) {
@@ -27,15 +28,17 @@ export default function Courses({ courses }: { courses: any[]; }) {
         <div className="flex-fill">
           <Routes>
             <Route path="/" element={<Navigate to="Home" />} />
-            <Route path="Home" element={<Home />} />
-            <Route path="Modules" element={<Modules />} />
-            <Route path="Assignments" element={<Assignments />} />
-            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-            <Route path="Assignments/New" element={<New />} />
-            <Route path="Piazza" element={<h2>Piazza</h2>} />
-            <Route path="Zoom" element={<h2>Zoom</h2>} />
-            <Route path="Quizzes" element={<h2>Quizzes</h2>} />
-            <Route path="Grades" element={<Grades />} />
+            <Route path="/Home" element={<Home />} />
+            <Route path="/Modules" element={<Modules />} />
+            <Route path="/Assignments" element={<Assignments />} />
+            <Route path="/Assignments/:aid" element={<AssignmentEditor />} />
+            <Route path="/Assignments/New" element={<New />} />
+            <Route path="/Piazza" element={<h2>Piazza</h2>} />
+            <Route path="/Zoom" element={<h2>Zoom</h2>} />
+            <Route path="/Quizzes" element={<h2>Quizzes</h2>} />
+            <Route path="/Grades" element={<Grades />} />
+            <Route path="/People" element={<PeopleTable />} />
+            <Route path="/People/:uid" element={<PeopleTable />} />
           </Routes>
         </div>
       </div>
