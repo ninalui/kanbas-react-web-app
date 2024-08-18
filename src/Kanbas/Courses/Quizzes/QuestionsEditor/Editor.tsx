@@ -7,7 +7,6 @@ import Truefalse from "./Truefalse";
 import Fillinblank from "./Fillinblank";
 import * as client from "../client";
 import { updateQuestion } from "../reducer";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 export default function Editor(
@@ -126,13 +125,6 @@ export default function Editor(
         <hr />
 
         {/* text box for question */}
-        <ReactQuill
-          value={currentQuestion.question}
-          onChange={(content) => setCurrentQuestion({ ...currentQuestion, question: content })}
-          theme="snow"
-          modules={modules}
-          className="mb-3"
-        />
         <WYSIWYG question={currentQuestion} setQuestion={setCurrentQuestion}/>
         <hr />
 

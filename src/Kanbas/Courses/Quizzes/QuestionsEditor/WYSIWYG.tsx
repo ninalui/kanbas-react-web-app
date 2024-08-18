@@ -28,7 +28,7 @@ export default function WYSIWYG(
   const toggleList = (format: string) => {
     document.execCommand("formatBlock", false, "P");
     document.execCommand(format, false);
-    
+
     updateActiveFormats();
   };
 
@@ -46,7 +46,7 @@ export default function WYSIWYG(
   const cleanUpInlineStyles = () => {
     const editor = editorRef.current;
     if (!editor) return;
-  
+
     const spans = editor.querySelectorAll('span[style]');
     spans.forEach(span => {
       const parent = span.parentNode;
@@ -55,7 +55,7 @@ export default function WYSIWYG(
       }
       parent?.removeChild(span);
     });
-  };  
+  };
 
   const updateActiveFormats = () => {
     setIsBold(document.queryCommandState("bold"));
