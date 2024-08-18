@@ -37,21 +37,21 @@ export default function Editor(
     // if changing to TF, change options to true/false
     if (newType === "TF") {
       setCurrentQuestion((prev: any) => ({
-        ...prev, options: [{ value: "True", correct: true }, { value: "False", correct: false }],
+        ...prev, options: [{ _id: 1, value: "True", correct: true }, { _id: 2, value: "False", correct: false }],
       }));
     }
 
     // if changing to fill-in, change options to be all correct
     if (newType === "Fill-in") {
       setCurrentQuestion((prev: any) => ({
-        ...prev, options: [{ value: "Option", correct: true }],
+        ...prev, options: [{ _id: 1, value: "Option", correct: true }],
       }));
     }
 
     // if changing to MC, change options to be 1 correct and 1 incorrect
     if (newType === "MC") {
       setCurrentQuestion((prev: any) => ({
-        ...prev, options: [{ value: "Option 1", correct: true }, { value: "Option 2", correct: false }],
+        ...prev, options: [{ _id: 1, value: "Option 1", correct: true }, { _id: 2, value: "Option 2", correct: false }],
       }));
     }
   };
