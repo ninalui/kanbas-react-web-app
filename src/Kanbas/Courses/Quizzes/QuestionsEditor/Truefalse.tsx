@@ -1,4 +1,4 @@
-import { FaArrowAltCircleRight } from "react-icons/fa";
+import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import "./styles.css";
 
 export default function Truefalse(
@@ -27,12 +27,15 @@ export default function Truefalse(
                 defaultChecked={answer.correct}
                 onChange={() => handleChange(answer._id)}
               />
-              <FaArrowAltCircleRight className={`fs-4 me-3 ${answer.correct ? "text-success" : ""}`} />
+              {answer.correct
+                ? <FaCheckCircle className="fs-4 text-success" />
+                : <FaRegCircle className="fs-4 text-danger" />}
+
             </label>
             {/* text label */}
             <label
               htmlFor={`tf-answer-${answer._id}`}
-              className={`col-sm-10 col-form-label ps-2 ${answer.correct ? "text-success" : ""}`}>
+              className={`col-sm-10 col-form-label ps-3 ${answer.correct ? "text-success" : "text-danger"}`}>
               {answer.value}
             </label>
           </div>

@@ -1,15 +1,17 @@
 import { PiTrashLight } from "react-icons/pi";
 import "./styles.css";
+import { useState } from "react";
 
 export default function Fillinblank(
   { question, setQuestion }:
     { question: any; setQuestion: any; }
 ) {
+  const [showModal, setShowModal] = useState(false);
   const answers = question.options;
 
   const addAnswer = () => {
-    const newAnswer = { value: "Option", correct: true };
-    console.log("newAnswer", newAnswer);
+    const tempId = new Date().getTime();
+    const newAnswer = { _id: tempId, value: "Option", correct: false };
     setQuestion({ ...question, options: [...answers, newAnswer] });
   };
 
@@ -20,6 +22,10 @@ export default function Fillinblank(
 
   const removeAnswer = (id: any) => {
     const newAnswers = answers.filter((a: any) => a._id !== id);
+    if (newAnswers.length === 0) {
+      setShowModal(true);
+      return;
+    }
     setQuestion({ ...question, options: newAnswers });
   };
 
@@ -31,9 +37,9 @@ export default function Fillinblank(
           <div className="me-3">
             <label
               htmlFor={`fib-answer-${answer._id}`}
-              className="col-sm-10 col-form-label text-end label-nowrap"
+              className="ms-3 col-form-label text-end label-nowrap"
             >
-              Possible Answer
+              Possible Answer:
             </label>
           </div>
           <div className="flex-fill">
@@ -60,6 +66,24 @@ export default function Fillinblank(
         <button className="btn btn-link text-danger text-decoration-none" type="button" onClick={() => addAnswer()}>
           + Add Another Answer
         </button>
+      </div>
+
+      {/* modal for delete warning */}
+      <div className={`modal fade ${showModal ? 'show d-block' : ''}`} role="dialog">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Error</h5>
+              <button type="button" className="btn-close" onClick={() => setShowModal(false)} aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>Unable to delete question - must have at least 2 options.</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-danger" onClick={() => setShowModal(false)}>OK</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -14,18 +14,6 @@ export default function Editor(
 ) {
   const dispatch = useDispatch();
 
-  const modules = {
-    toolbar: {
-      container: [
-        [{ 'header': [1, 2, 3, false] }],
-        ['bold', 'italic', 'underline'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' },
-        { 'indent': '-1' }, { 'indent': '+1' }],
-        ['clean']
-      ],
-    },
-  };
-
   const [selectedType, setSelectedType] = useState(question?.type || "MC");
   const [currentQuestion, setCurrentQuestion] = useState(question);
 
@@ -129,7 +117,7 @@ export default function Editor(
 
         {/* show correct component based on question type */}
         <div className="mb-3">
-          <h4>Answers</h4>
+          <h4 className="mb-2">Answers:</h4>
           {renderQuestionType(selectedType, currentQuestion, setCurrentQuestion)}
         </div>
 
