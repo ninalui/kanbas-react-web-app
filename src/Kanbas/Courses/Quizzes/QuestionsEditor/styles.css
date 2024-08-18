@@ -19,6 +19,11 @@
     width: 125px;
 }
 
-.wysiwyg {
-  height: 200px;
+#wysiwyg-editor {
+  min-height: 200px;
+}
+
+#blocks {
+  text-decoration: none;
+  color: black;
 }

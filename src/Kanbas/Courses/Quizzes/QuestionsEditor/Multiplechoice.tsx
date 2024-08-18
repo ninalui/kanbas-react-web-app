@@ -70,7 +70,7 @@ export default function Multiplechoice(
 
           {/* remove answer */}
           <div>
-            <button className="btn btn-link text-black" onClick={() => removeAnswer(answer._id)}>
+            <button className="btn btn-link text-black" type="button" onClick={() => removeAnswer(answer._id)}>
               <PiTrashLight className="fs-4" />
             </button>
           </div>
@@ -79,7 +79,7 @@ export default function Multiplechoice(
 
       {/* add another answer */}
       <div className="text-end">
-        <button className="btn btn-link text-danger text-decoration-none" onClick={() => addAnswer()}>
+        <button className="btn btn-link text-danger text-decoration-none" type="button" onClick={() => addAnswer()}>
           + Add Another Answer
         </button>
       </div>

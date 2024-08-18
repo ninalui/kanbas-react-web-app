@@ -1,6 +1,7 @@
 import './styles.css'
 import { useState, useEffect } from "react";
 import { useDispatch, } from "react-redux";
+import WYSIWYG from "./WYSIWYG";
 import Multiplechoice from "./Multiplechoice";
 import Truefalse from "./Truefalse";
 import Fillinblank from "./Fillinblank";
@@ -132,6 +133,7 @@ export default function Editor(
           modules={modules}
           className="mb-3"
         />
+        <WYSIWYG question={currentQuestion} setQuestion={setCurrentQuestion}/>
         <hr />
 
         {/* show correct component based on question type */}
@@ -142,8 +144,8 @@ export default function Editor(
 
         {/* save and cancel buttons */}
         <div className="mb-3">
-          <button className="btn btn-secondary me-2" onClick={handleCancel}>Cancel</button>
-          <button className="btn btn-danger" onClick={() => saveQuestion(currentQuestion)}>Update Question</button>
+          <button className="btn btn-secondary me-2" type="button" onClick={handleCancel}>Cancel</button>
+          <button className="btn btn-danger" type="button" onClick={() => saveQuestion(currentQuestion)}>Update Question</button>
         </div>
         <hr />
       </div>
