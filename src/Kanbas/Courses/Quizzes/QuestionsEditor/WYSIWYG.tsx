@@ -136,7 +136,7 @@ export default function WYSIWYG(
         role="textbox"
         aria-multiline={true}
         onInput={handleChange}
-        dangerouslySetInnerHTML={{ __html: content }} // sanitize
+        dangerouslySetInnerHTML={{ __html: content }}
       >
       </div>
     </div>
