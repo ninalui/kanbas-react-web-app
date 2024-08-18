@@ -16,7 +16,7 @@ export default function Truefalse(
     <div id="tf-editor">
       {answers.map((answer: any) => (
         <div className="form-group row" key={answer._id}>
-          <div className="col-3">
+          <div className="col">
             {/* icon */}
             <label>
               <input
