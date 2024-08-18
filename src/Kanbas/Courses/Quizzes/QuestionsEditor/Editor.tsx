@@ -7,7 +7,6 @@ import Truefalse from "./Truefalse";
 import Fillinblank from "./Fillinblank";
 import * as client from "../client";
 import { updateQuestion } from "../reducer";
-import "react-quill/dist/quill.snow.css";
 
 export default function Editor(
   { question, handleCancel }:

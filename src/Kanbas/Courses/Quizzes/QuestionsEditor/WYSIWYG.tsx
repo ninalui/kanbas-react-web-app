@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LuBold, LuItalic, LuUnderline, LuListOrdered, LuList } from "react-icons/lu";
 import "./styles.css"
 import { Dropdown, DropdownButton } from "react-bootstrap";
@@ -22,13 +22,14 @@ export default function WYSIWYG(
 
   const toggleFormat = (format: string) => {
     document.execCommand(format, false);
+    cleanUpInlineStyles();
     updateActiveFormats();
   };
 
   const toggleList = (format: string) => {
     document.execCommand("formatBlock", false, "P");
     document.execCommand(format, false);
-
+    cleanUpInlineStyles();
     updateActiveFormats();
   };
 
@@ -73,9 +74,7 @@ export default function WYSIWYG(
   }, []);
 
   return (
-    <div>
-      {/* <div className="d-flex justify-content-start pb-2"> */}
-
+    <div id="wysiwyg">
       <div className="btn-toolbar border p-2" role="toolbar" aria-label="Toolbar with button groups">
         <div className="btn-group" role="group" aria-label="Basic example">
           <DropdownButton id="blocks" title="Select" variant="link">
