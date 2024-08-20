@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { setQuestions } from "./reducer";
+import { setQuestions, addQuestion } from "./reducer";
 
 import * as client from "./client";
 import Editor from "./QuestionsEditor/Editor";
@@ -10,7 +10,7 @@ import Editor from "./QuestionsEditor/Editor";
 // - only made to handle showing editor for now
 
 export default function Details() {
-  const { qid } = useParams();
+  const { cid, qid } = useParams();
   const dispatch = useDispatch();
 
   const { questions } = useSelector((state: any) => state.questionsReducer);
@@ -29,6 +29,10 @@ export default function Details() {
     dispatch(setQuestions(questions));
   };
 
+  const addNewQuestion = (question: any): any => {
+    dispatch(addQuestion(question));
+  };
+
   useEffect(() => {
     fetchQuestions();
   }, []);
@@ -36,6 +40,7 @@ export default function Details() {
   return (
     <div>
       <h1>Quiz Details</h1>
+      <button onClick={addNewQuestion}>Add Question</button>
       {questions.map((question: any) => (
         <div key={question.id}>
           {editingIds.includes(question._id) ? (
